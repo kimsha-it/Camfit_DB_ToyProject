@@ -1,13 +1,18 @@
-CREATE DATABASE camfit;
-DROP DATABASE IF EXISTS camfit;
+CREATE
+DATABASE camfit;
+DROP
+DATABASE IF EXISTS camfit;
 
-CREATE DATABASE camfit
+CREATE
+DATABASE camfit
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
-SHOW DATABASES;
+SHOW
+DATABASES;
 
-USE camfit;
+USE
+camfit;
 
 -- campsite
 CREATE TABLE campsite
@@ -17,13 +22,14 @@ CREATE TABLE campsite
 
 ALTER TABLE campsite
 
-    ADD COLUMN title         VARCHAR(100) NOT NULL,
+    ADD COLUMN title VARCHAR(100) NOT NULL,
     ADD COLUMN content       TEXT         NOT NULL,
     ADD COLUMN phone_number  INT,
     ADD COLUMN certification BOOLEAN,
     ADD COLUMN open_date     DATETIME,
     ADD COLUMN created_at    DATETIME DEFAULT NOW(),
-    ADD COLUMN updated_at    DATETIME DEFAULT NOW() ON UPDATE NOW();
+    ADD COLUMN updated_at    DATETIME DEFAULT NOW() ON
+UPDATE NOW();
 
 ALTER TABLE campsite
     ADD FOREIGN KEY (region_id) REFERENCES region (region_id);
@@ -41,7 +47,8 @@ CREATE TABLE campsite_detail
     content            TEXT         NOT NULL
 );
 
-SHOW TABLES;
+SHOW
+TABLES;
 
 SELECT *
 FROM campsite;
@@ -148,15 +155,17 @@ DESCRIBE campsite_detail_category;
 -- reservation
 CREATE TABLE reservation
 (
-    reservation_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id        INT                                                                    NOT NULL,
-    payment_id     INT,
-    created_at     TIMESTAMP                                    DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    check_in       TIMESTAMP                                                              NOT NULL,
-    check_out      TIMESTAMP                                                              NOT NULL,
-    state          ENUM ('RESERVED', 'CHECKED_IN', 'CANCELLED') DEFAULT 'RESERVED',
+    reservation_id     INT PRIMARY KEY AUTO_INCREMENT,
+    user_id            INT                                 NOT NULL,
+    payment_id         INT,
+    campsite_detail_id INT                                 NOT NULL,
+    created_at         TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    check_in           TIMESTAMP                           NOT NULL,
+    check_out          TIMESTAMP                           NOT NULL,
+    state              ENUM ('RESERVED', 'CHECKED_IN', 'CANCELLED') DEFAULT 'RESERVED',
     FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (payment_id) REFERENCES payment (payment_id)
+    FOREIGN KEY (payment_id) REFERENCES payment (payment_id),
+    FOREIGN KEY (campsite_detail_id) REFERENCES campsite_detail (campsite_detail_id)
 );
 
 DESCRIBE reservation;
@@ -164,10 +173,12 @@ DESCRIBE reservation;
 -- payment
 CREATE TABLE payment
 (
-    payment_id     INT PRIMARY KEY AUTO_INCREMENT,
-    created_at     TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    payment_method VARCHAR(255)                        NOT NULL,
-    cost           INT                                 NOT NULL
+    payment_id         INT PRIMARY KEY AUTO_INCREMENT,
+    user_id            INT                                 NOT NULL,
+    created_at         TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    payment_method     VARCHAR(255)                        NOT NULL,
+    cost               INT                                 NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
 );
 
 DESCRIBE payment;
@@ -185,4 +196,4 @@ CREATE TABLE search_history
 DESCRIBE search_history;
 
 ALTER TABLE search_history
-    CHANGE content content VARCHAR(255) NOT NULL;
+    CHANGE content content VARCHAR (255) NOT NULL;
