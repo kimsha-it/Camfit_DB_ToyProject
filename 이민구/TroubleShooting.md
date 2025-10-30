@@ -47,3 +47,15 @@
 - **결과**: 계층형 카테고리 구조 확립 및 관계 명확화.
 
 ---
+
+### 7. Datetime → Timestamp 방식 변경
+- **문제**: `created_at`, `updated_at` 컬럼을 `DATETIME`으로 설정했을 때, 서버·로컬 간 **시간대(TimeZone)** 불일치 문제 발생.
+- **원인**: `DATETIME`은 시간대를 고려하지 않아, AWS RDS(UTC)와 로컬(Asia/Seoul) 환경 간 시간 오차가 발생함.
+- **해결**: 모든 시간 컬럼(`created_at`, `updated_at`, `deleted_at` 등)을 `TIMESTAMP`로 변경하고  
+  `DEFAULT CURRENT_TIMESTAMP`, `ON UPDATE CURRENT_TIMESTAMP` 옵션을 적용하여 자동 갱신되도록 설정.
+- **결과**:
+    - 서버 간 시간 일관성 확보
+    - 레코드 생성 및 수정 시각 자동 관리
+    - 코드 레벨에서 불필요한 시간 변환 로직 제거로 유지보수성 향상
+
+---
