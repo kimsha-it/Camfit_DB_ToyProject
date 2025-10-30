@@ -1,0 +1,76 @@
+-- 데이터베이스 생성
+CREATE DATABASE camfit;
+USE camfit;
+SHOW TABLES;
+
+-- 테이블 생성
+CREATE TABLE users (
+	user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    password_confirm VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    phone INT NOT NULL
+);
+
+CREATE TABLE posts (
+	post_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE TABLE comments (
+	comment_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE,
+	FOREIGN KEY (post_id) REFERENCES posts(post_id)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE likes (
+	like_id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE,
+	FOREIGN KEY (post_id) REFERENCES posts(post_id)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE keeps (
+	keep_id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE,
+	FOREIGN KEY (post_id) REFERENCES posts(post_id)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE media (
+	media_id INT PRIMARY KEY AUTO_INCREMENT,
+    related_type VARCHAR(100) NOT NULL,
+    relaed_id INT NOT NULL,
+    media_type ENUM('IMAGE', 'VIDEO') NOT NULL,
+    media_url VARCHAR(255) NOT NULL,
+    media_order INT,
+    created_at DATE NOT NULL,
+    updated_at DATE NOT NULL
+);
+
+
