@@ -29,9 +29,9 @@ FROM campsite_detail_category;
 
 
 -- 4️⃣ payment
-INSERT INTO payment (payment_id, cost, payment_method)
-VALUES (1, 50000, 'credit_card'),
-       (2, 75000, 'bank_transfer');
+INSERT INTO payment (payment_id, cost, payment_method, user_id)
+VALUES (1, 50000, 'credit_card', 1),
+       (2, 75000, 'bank_transfer', 2);
 
 SELECT *
 FROM payment;
@@ -92,9 +92,9 @@ FROM camping_log;
 
 
 -- 11️⃣ reservation
-INSERT INTO reservation (reservation_id, user_id, payment_id, check_in, check_out)
-VALUES (1, 1, 1, '2025-11-01 14:00:00', '2025-11-02 11:00:00'),
-       (2, 2, 2, '2025-11-08 14:00:00', '2025-11-09 11:00:00');
+INSERT INTO reservation (reservation_id, user_id, payment_id, check_in, check_out, campsite_detail_id)
+VALUES (1, 1, 1, '2025-11-01 14:00:00', '2025-11-02 11:00:00', 1),
+       (2, 2, 2, '2025-11-08 14:00:00', '2025-11-09 11:00:00', 2);
 
 SELECT *
 FROM reservation;
