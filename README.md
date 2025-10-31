@@ -1,4 +1,4 @@
-# Campit DB Modeling Project 
+# Camfit DB Modeling Project 
 
 ![img.png](image/camfit_homepage.png)
 
@@ -34,12 +34,12 @@
 
 1.  **데이터베이스 설정:** MySQL 서버를 설치하고, 프로젝트를 위한 데이터베이스를 생성합니다.
     ```sql
-    CREATE DATABASE campit_db;
-    USE campit_db;
+    CREATE DATABASE camfit_db;
+    USE camfit_db;
     ```
 2.  **스키마 및 데이터 로드:** `/dump.sql` 파일을 실행하여 테이블을 생성하고 샘플 데이터를 삽입합니다.
     ```bash
-    mysql -u [username] -p campit < dump.sql
+    mysql -u [username] -p camfit < dump.sql
     ```
 3.  **쿼리 실행:** `queries.sql` 파일의 쿼리들을 실행하며 데이터베이스 기능을 테스트합니다.
 
